@@ -1,14 +1,23 @@
+body {
+    display: flex;
+}
+
+main,
+aside {
+    padding: 32px;
+}
+
 #canvas {
     background: #333;
 }
 
 #scoreboard {
     display: flex;
-    width: 800px;
+    width: 500px;
     justify-content: space-between;
     font-family: monospace;
     font-size: 40px;
-    color: lightgray;
+    color: #333;
 }
 
 #scoreboard .score {

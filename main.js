@@ -1,8 +1,7 @@
-const WIDTH = 800;
-const HEIGHT = 800;
+const WIDTH = 500;
+const HEIGHT = 500;
 const CANVAS = document.getElementById('canvas');
 const CTX = canvas.getContext('2d');
-CTX.fillStyle = 'white';
 CANVAS.width = WIDTH;
 CANVAS.height = HEIGHT;
 
@@ -108,5 +107,6 @@ function frame() {
     window.requestAnimationFrame(frame);
 }
 
+CTX.fillStyle = 'white';
 frame()
 restart()

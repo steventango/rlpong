@@ -6,18 +6,26 @@
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
-    <div id="scoreboard">
-        <div class="score">
-            <label>Player 1</label>
-            <div id="player1score">0</div>
+    <main>
+        <div id="scoreboard">
+            <div class="score">
+                <label>RL Agent</label>
+                <div id="player1score">0</div>
+            </div>
+            <div class="score">
+                <label>Human</label>
+                <div id="player2score">0</div>
+            </div>
         </div>
-        <div class="score">
-            <label>Player 2</label>
-            <div id="player2score">0</div>
-        </div>
-    </div>
-    <p><a href="https://www.youtube.com/watch?v=zlKXZiWE1XI"><cite>Let’s Build a Physics Simulation (PONG: Part 2)</cite></a> by Jasper @ <a href="//minutelabs.io">MinuteLabs.io</a></p>
+        <canvas id="canvas"></canvas>
+        <p><a href="https://www.youtube.com/watch?v=zlKXZiWE1XI"><cite>Let’s Build a Physics Simulation (PONG: Part 2)</cite></a> by Jasper @ <a href="//minutelabs.io">MinuteLabs.io</a></p>
+    </main>
+    <aside>
+        <h1>RL Pong</h1>
+        <p>Semi - gradient n - step Sarsa</p>
+        <button>Github Fab?</button>
+        <p><a href="http://incompleteideas.net/book/RLbook2020.pdf"><cite>Reinforcement Learning: An Introduction 2ed 10.2</cite></a> by Richard S. Sutton and Andrew G. Barto </p>
+    </aside>
     <script src="https://labs.minutelabs.io/toolkit/js/vector.js"></script>
     <script src="./paddle.js"></script>
     <script src="./main.js"></script>
