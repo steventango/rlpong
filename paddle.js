@@ -13,15 +13,9 @@ function lineBounce(line, ball) {
         displacement.setNorm(overlap)
         ball.position.add(displacement)
     }
-
-    // lineVector.debugDraw(CTX, point1)
-    // pointToBall.debugDraw(CTX, point1, 1, false, 'gold')
-    // proj.debugDraw(CTX, point1, 1, false, 'aqua')
-    // displacement.debugDraw(CTX, point1.plus(proj), 1, false, 'tomato')
 }
 
 function createPaddle({ x, y0, width, height, keys, boundY, hitSide }) {
-
     let y = y0;
     let velocity = 0
 
