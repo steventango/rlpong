@@ -1,0 +1,16 @@
+#canvas {
+    background: #333;
+}
+
+#scoreboard {
+    display: flex;
+    width: 800px;
+    justify-content: space-between;
+    font-family: monospace;
+    font-size: 40px;
+    color: lightgray;
+}
+
+#scoreboard .score {
+    text-align: center;
+}
