@@ -15,25 +15,27 @@ function lineBounce(line, ball) {
     }
 }
 
-function createPaddle({ x, y0, width, height, keys, boundY, hitSide }) {
+function createPaddle({ x, y0, width, height, keys, boundY, hitSide, human }) {
     let y = y0;
     let velocity = 0
 
-    window.addEventListener('keydown', e => {
-        let key = e.key;
-        if (key === keys.up) {
-            velocity = -0.5
-        } else if (key === keys.down) {
-            velocity = 0.5
-        }
-    })
+    if (human) {
+        window.addEventListener('keydown', e => {
+            let key = e.key;
+            if (key === keys.up) {
+                velocity = -0.5
+            } else if (key === keys.down) {
+                velocity = 0.5
+            }
+        })
 
-    window.addEventListener('keyup', e => {
-        let key = e.key;
-        if (key === keys.up || key === keys.down) {
-            velocity = 0
-        }
-    })
+        window.addEventListener('keyup', e => {
+            let key = e.key;
+            if (key === keys.up || key === keys.down) {
+                velocity = 0
+            }
+        })
+    }
 
     function getHitLine() {
         if (hitSide === 'left') {
@@ -64,9 +66,26 @@ function createPaddle({ x, y0, width, height, keys, boundY, hitSide }) {
         lineBounce(hitLine, ball)
     }
 
+    function action(action) {
+        switch (action) {
+            case 0:
+                velocity = 0
+                break;
+            case 1:
+                velocity = -0.5
+                break;
+            case 2:
+                velocity = 0.5
+                break;
+        }
+    }
+
     return {
         move,
         draw,
-        checkHit
+        checkHit,
+        action,
+        x,
+        y
     }
 }

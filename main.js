@@ -2,6 +2,7 @@ const WIDTH = 500;
 const HEIGHT = 500;
 const CANVAS = document.getElementById('canvas');
 const CTX = canvas.getContext('2d');
+const SCORES = [0, 0]
 CANVAS.width = WIDTH;
 CANVAS.height = HEIGHT;
 
@@ -12,10 +13,10 @@ function circle(x, y, r) {
 }
 
 const dt = 20
-const ball = {
+const BALL = {
     radius: 10,
-    position: V(300, 300),
-    velocity: V(0.3, 0.4)
+    position: V(WIDTH / 2, HEIGHT / 2),
+    velocity: V(0, 0)
 }
 
 const player1 = createPaddle({
@@ -23,12 +24,9 @@ const player1 = createPaddle({
     y0: HEIGHT / 2,
     width: 20,
     height: 80,
-    keys: {
-        up: 'w',
-        down: 's'
-    },
     boundY: 50,
-    hitSide: 'right'
+    hitSide: 'right',
+    human: false
 })
 
 const player2 = createPaddle({
@@ -36,47 +34,54 @@ const player2 = createPaddle({
     y0: HEIGHT / 2,
     width: 20,
     height: 80,
-    keys: {
-        up: 'ArrowUp',
-        down: 'ArrowDown'
-    },
     boundY: 50,
-    hitSide: 'left'
+    hitSide: 'left',
+    human: false
 })
 
+let AGENT1interval;
+
 function restart() {
-    ball.velocity.set(0, 0)
-    ball.position.set(WIDTH / 2, HEIGHT / 2)
+    window.clearInterval(AGENT1interval);
+    start();
+}
+
+function start() {
+    BALL.velocity.set(0, 0)
+    BALL.position.set(WIDTH / 2, HEIGHT / 2)
     setTimeout(() => {
-        ball.velocity.randomize(0.4);
+        BALL.velocity.randomize(0.3);
+        AGENT1.agent_start([BALL.position.x, BALL.position.y, player1.y])
+        AGENT1interval = window.setInterval(() => {
+            player1.action(AGENT1.agent_step(0, [BALL.position.x, BALL.position.y, player1.y]));
+        }, 250)
     }, 500)
 }
 
 function scorePoint(player) {
-    let el
     if (player == 1) {
-        el = document.getElementById('player1score');
+        SCORES[0] += 1;
+        AGENT1.agent_end(1);
     } else {
-        el = document.getElementById('player2score');
+        SCORES[1] += 1;
+        AGENT1.agent_end(-1);
     }
-
-    let score = Number.parseInt(el.innerHTML);
-    score += 1;
-    el.innerHTML = score;
+    document.getElementById('player1score').textContent = SCORES[0]
+    document.getElementById('player2score').textContent = SCORES[1]
     restart();
 }
 
 function checkEdgeBounce() {
-    if (ball.position.y >= HEIGHT - ball.radius) {
-        ball.velocity.y *= -1
+    if (BALL.position.y >= HEIGHT - BALL.radius) {
+        BALL.velocity.y *= -1
     }
-    if (ball.position.x >= WIDTH - ball.radius) {
+    if (BALL.position.x >= WIDTH - BALL.radius) {
         scorePoint(1)
     }
-    if (ball.position.y <= ball.radius) {
-        ball.velocity.y *= -1
+    if (BALL.position.y <= BALL.radius) {
+        BALL.velocity.y *= -1
     }
-    if (ball.position.x <= ball.radius) {
+    if (BALL.position.x <= BALL.radius) {
         scorePoint(2)
     }
 }
@@ -86,12 +91,12 @@ function clear() {
 }
 
 function move() {
-    ball.position.add(ball.velocity.times(dt));
+    BALL.position.add(BALL.velocity.times(dt));
 }
 
 function draw() {
     clear();
-    circle(ball.position.x, ball.position.y, ball.radius, ball.color);
+    circle(BALL.position.x, BALL.position.y, BALL.radius, BALL.color);
     player1.draw(CTX);
     player2.draw(CTX);
 }
@@ -101,12 +106,12 @@ function frame() {
     player2.move(dt)
     checkEdgeBounce()
     move()
-    player1.checkHit(ball)
-    player2.checkHit(ball)
+    player1.checkHit(BALL)
+    player2.checkHit(BALL)
     draw()
     window.requestAnimationFrame(frame);
 }
 
 CTX.fillStyle = 'white';
 frame()
-restart()
+start()
