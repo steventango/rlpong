@@ -80,12 +80,18 @@ function createPaddle({ x, y0, width, height, keys, boundY, hitSide, human }) {
         }
     }
 
+    function position() {
+        return {
+            x: x,
+            y: y
+        }
+    }
+
     return {
         move,
         draw,
         checkHit,
         action,
-        x,
-        y
+        position
     }
 }

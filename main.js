@@ -51,9 +51,9 @@ function start() {
     BALL.position.set(WIDTH / 2, HEIGHT / 2)
     setTimeout(() => {
         BALL.velocity.randomize(0.3);
-        AGENT1.agent_start([BALL.position.x, BALL.position.y, player1.y])
+        AGENT1.agent_start([BALL.position.x, BALL.position.y, player1.position().y])
         AGENT1interval = window.setInterval(() => {
-            player1.action(AGENT1.agent_step(0, [BALL.position.x, BALL.position.y, player1.y]));
+            player1.action(AGENT1.agent_step(0, [BALL.position.x, BALL.position.y, player1.position().y]));
         }, 250)
     }, 500)
 }
