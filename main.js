@@ -2,11 +2,11 @@ const WIDTH = 800;
 const HEIGHT = 800;
 const CANVAS = document.getElementById('canvas');
 const CTX = canvas.getContext('2d');
+CTX.fillStyle = 'white';
 CANVAS.width = WIDTH;
 CANVAS.height = HEIGHT;
 
-function circle(x, y, r, color) {
-    CTX.fillStyle = color;
+function circle(x, y, r) {
     CTX.beginPath();
     CTX.arc(x, y, r, 0, 2 * Math.PI);
     CTX.fill();
@@ -16,8 +16,7 @@ const dt = 20
 const ball = {
     radius: 10,
     position: V(300, 300),
-    velocity: V(0.3, 0.4),
-    color: 'white'
+    velocity: V(0.3, 0.4)
 }
 
 const player1 = createPaddle({
@@ -68,11 +67,6 @@ function scorePoint(player) {
     restart();
 }
 
-// window.addEventListener('mousemove', e => {
-//   ball.position.x = e.pageX;
-//   ball.position.y = e.pageY;
-// })
-
 function checkEdgeBounce() {
     if (ball.position.y >= HEIGHT - ball.radius) {
         ball.velocity.y *= -1
@@ -111,16 +105,8 @@ function frame() {
     player1.checkHit(ball)
     player2.checkHit(ball)
     draw()
+    window.requestAnimationFrame(frame);
 }
 
-function animate() {
-    setTimeout(animate, dt)
-    frame()
-}
-
-animate()
+frame()
 restart()
-
-// 1. Use `requestAnimationFrame` instead of `setTimeout`, and adjust `dt` accordingly
-// 2.1. Use separate `canvas` for the paddles and balls
-// 2.2. Setting `fillStyle` is expensive to call each frame, so just set it globally.
